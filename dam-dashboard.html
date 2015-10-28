@@ -67,10 +67,60 @@ Example:
     </paper-card>
 
 
-    <nuxeo-es-search></nuxeo-es-search>
+    <!-- SerialDocumentReview --------------------------------------------------->
+    <!-- Total workflows started by each user -->
+    <!-- Retrieve our data and store it in 'initiators' -->
+    <nuxeo-workflow-data workflow="SerialDocumentReview" event="afterWorkflowStarted" grouped-by="workflowInitiator" start-date="[[startDate]]" end-date="[[endDate]]" data="{{initiators_SerialDocumentReview}}">
+    </nuxeo-workflow-data>
+
+    <!-- Display a Pie Chart with our data -->
+    <paper-card heading="Serial Review Initiator" elevation="2">
+      <div class="card-content">
+        <google-chart type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_SerialDocumentReview)]]">
+        </google-chart>
+      </div>
+    </paper-card>
+
+    <nuxeo-workflow-data workflow="SerialDocumentReview" event="afterWorkflowFinish" metrics="avg(timeSinceWfStarted)" start-date="[[startDate]]" end-date="[[endDate]]" data="{{avgWorkflowLength_SerialDocumentReview}}">
+    </nuxeo-workflow-data>
+
+    <paper-card heading="Avg. Serial Review Duration" elevation="2">
+      <div class="card-content">
+        <iron-icon icon="image:timer"></iron-icon>
+        <span class="workflow-length-label">[[_asDuration(avgWorkflowLength_SerialDocumentReview)]]</span>
+      </div>
+    </paper-card>
+
+
+    <!-- ParallelDocumentReview --------------------------------------------------->
+    <!-- Total workflows started by each user -->
+    <!-- Retrieve our data and store it in 'initiators' -->
+    <nuxeo-workflow-data workflow="ParallelDocumentReview" event="afterWorkflowStarted" grouped-by="workflowInitiator" start-date="[[startDate]]" end-date="[[endDate]]" data="{{initiators_ParallelDocumentReview}}">
+    </nuxeo-workflow-data>
+
+    <!-- Display a Pie Chart with our data -->
+    <paper-card heading="Parallel Review Initiator" elevation="2">
+      <div class="card-content">
+        <google-chart type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_ParallelDocumentReview)]]">
+        </google-chart>
+      </div>
+    </paper-card>
+
+    <nuxeo-workflow-data workflow="ParallelDocumentReview" event="afterWorkflowFinish" metrics="avg(timeSinceWfStarted)" start-date="[[startDate]]" end-date="[[endDate]]" data="{{avgWorkflowLength_ParallelDocumentReview}}">
+    </nuxeo-workflow-data>
+
+    <paper-card heading="Avg. Parallel Review Duration" elevation="2">
+      <div class="card-content">
+        <iron-icon icon="image:timer"></iron-icon>
+        <span class="workflow-length-label">[[_asDuration(avgWorkflowLength_ParallelDocumentReview)]]</span>
+      </div>
+    </paper-card>
+
+
+    <nuxeo-es-search id="auditSearch" query="auditQuery()" index="audit" hits={{auditHits}} execute></nuxeo-es-search>
     <paper-card heading="Most Downloaded" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(typeCount)]]">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(auditHits)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -79,6 +129,12 @@ Example:
   </template>
 
 </dom-module>
+
+<script>
+  document.addEventListener('polymer-ready', function () {
+    document.querySelector('#auditSearch').execute();
+  });
+</script>
 
 <script>
   Polymer({
@@ -114,6 +170,13 @@ Example:
         result += seconds + " s ";
       }
       return result;
+    },
+
+    auditQuery: function () {
+      var myQuery = {
+        "match_all": {}
+      };
+      return myQuery;
     }
 
   });
