@@ -22,7 +22,6 @@ Contributors:
   <title>DAM Dashboard Demo</title>
 
   <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../bower_components/moment/min/moment-with-locales.js"></script>
 
   <link rel="import" href="../elements.html">
 
@@ -37,23 +36,24 @@ Contributors:
       font-size: 140%;
       display: table;
       margin: 0 auto;
+      color: #213f7d;
     }
     
     #header-spacer {
-      width: 129px;
+      width: 186px;
     }
     
     #logo {
-      background: transparent url('http://cm.cloud.nuxeo.com/nuxeo/img/nuxeo_cm_logo.png') no-repeat;
+      background: transparent url('http://dam.cloud.nuxeo.com/nuxeo/img/nuxeo_dam_logo.png') no-repeat;
       background-size: cover;
       display: inline-block;
-      height: 42px;
-      width: 129px;
+      height: 20px;
+      width: 186px;
       ;
     }
     
     paper-toolbar {
-      --paper-toolbar-background: #236ba5;
+      --paper-toolbar-background: #ffffff;
     }
   </style>
 
@@ -64,7 +64,7 @@ Contributors:
   <template is="dom-bind" id="app">
 
     <!-- Define a connection to our Nuxeo server -->
-    <nx-connection url="/nuxeo"></nx-connection>
+    <nuxeo-connection url="/nuxeo"></nuxeo-connection>
 
     <paper-header-panel>
       <paper-toolbar>

@@ -35,21 +35,46 @@ Example:
 
   <template>
 
-    <nuxeo-es-search></nuxeo-es-search>
 
-    <!-- Asset type --------------------------------------------------->
-    <!-- Would like to filter out deleted items but I'm not sure how to
-           add "not" using this element. Maybe you can nest the "must_not"
-           ES filter? -->
-    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:format" data="{{pictureTypes}}">
+
+    <nuxeo-repository-data grouped-by="ecm:primaryType" data="{{typeCount}}">
     </nuxeo-repository-data>
+    <paper-card heading="Document Types" elevation="2">
+      <div class="card-content">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(typeCount)]]">
+        </google-chart>
+      </div>
+    </paper-card>
 
+
+    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{pictureTypes}}">
+    </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
       <div class="card-content">
         <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(pictureTypes)]]">
         </google-chart>
       </div>
     </paper-card>
+
+
+    <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
+    </nuxeo-repository-data>
+    <paper-card heading="Video Types" elevation="2">
+      <div class="card-content">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(videoTypes)]]">
+        </google-chart>
+      </div>
+    </paper-card>
+
+
+    <nuxeo-es-search></nuxeo-es-search>
+    <paper-card heading="Most Downloaded" elevation="2">
+      <div class="card-content">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(typeCount)]]">
+        </google-chart>
+      </div>
+    </paper-card>
+
 
   </template>
 
