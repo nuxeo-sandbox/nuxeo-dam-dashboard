@@ -18,5 +18,14 @@
   "ignore": [
     "/.*",
     "/test/"
-  ]
+  ],
+  "dependencies": {
+    "polymer": "~1.2.0",
+    "iron-ajax": "PolymerElements/iron-ajax#~1.0.7",
+    "iron-elements": "PolymerElements/iron-elements#~1.0.4",
+    "paper-elements": "PolymerElements/paper-elements#~1.0.5",
+    "google-chart": "GoogleWebComponents/google-chart#~1.0.3",
+    "nuxeo-elements": "nuxeo/nuxeo-elements#~0.2.1",
+    "nuxeo-dataviz-elements": "nuxeo/nuxeo-dataviz-elements#~0.2.1"
+  }
 }
