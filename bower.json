@@ -1,0 +1,22 @@
+{
+  "name": "dam-dashboard",
+  "version": "0.0.1",
+  "authors": [
+    "Josh Fletcher <jfletcher@nuxeo.com>"
+  ],
+  "description": "Dashboard for Nuxeo applications with the DAM add-on.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "seed"
+  ],
+  "main": [
+    "dam-dashboard.html"
+  ],
+  "license": "LGPL",
+  "homepage": "https://github.com/jfletcher-nuxeo/cm-workflow-dashboards",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ]
+}
