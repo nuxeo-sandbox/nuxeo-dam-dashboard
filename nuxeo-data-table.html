@@ -14,6 +14,8 @@ Lesser General Public License for more details.
 Contributors:
   Nelson Silva <nsilva@nuxeo.com>
 -->
+<link rel="import" href="../nuxeo-elements/nuxeo-document.html">
+
 <!-- based on sweet-material-table -->
 <dom-module id="nuxeo-data-table">
 
@@ -33,11 +35,15 @@ Contributors:
       </div>
 
       <div class="tbody">
-        <template is="dom-repeat" items="{{data}}" as="instance">
+        <template is="dom-repeat" items="{{data}}" as="downloadedDoc">
           <div class="tr horizontal layout" index="[[index]]">
-            <template is="dom-repeat" items="{{columns}}" as="column">
-              <div class="flex td">[[_value(instance, column)]]</div>
-            </template>
+            <div class="flex td">
+              <nuxeo-document auto doc-id="[[downloadedDoc.key]]" response="{{downloadedDoc.instance}}"></nuxeo-document>
+              <span>[[downloadedDoc.instance.properties.file:content.name]]</span>
+            </div>
+            <div class="flex td">
+              <span>[[downloadedDoc.value]]</span>
+            </div>
           </div>
         </template>
       </div>
