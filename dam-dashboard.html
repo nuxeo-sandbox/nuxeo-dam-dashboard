@@ -18,6 +18,7 @@ Contributors:
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../iron-icons/image-icons.html">
 <link rel="import" href="../google-chart/google-chart.html">
+<link rel="import" href="../nuxeo-elements/nuxeo-document.html">
 <link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
 <link rel="import" href="../nuxeo-audit-data/nuxeo-audit-data.html">
 <!--
@@ -38,7 +39,28 @@ Example:
   <template>
 
     <!-- Top downloads --------------------------------------------------->
-    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="10" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}"></nuxeo-audit-data>
+    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="10" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}">
+    </nuxeo-audit-data>
+    <paper-card heading="Top 10 Downloads" elevation="2">
+      <div class="card-content">
+        <table>
+          <tr>
+            <th>File</th>
+            <th>Count</th>
+          </tr>
+          <template is="dom-repeat" items="[[downloads]]" as="downloadedDoc">
+            <tr>
+              <td>
+                <nuxeo-document auto doc-id="[[downloadedDoc.key]]" response="{{downloadedDoc.instance}}"></nuxeo-document>
+                <span>[[downloadedDoc.instance.properties.file:content.name]]</span>
+              </td>
+              <td>[[downloadedDoc.value]]</td>
+            </tr>
+          </template>
+        </table>
+      </div>
+    </paper-card>
+
 
     <!-- File types --------------------------------------------------->
     <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
