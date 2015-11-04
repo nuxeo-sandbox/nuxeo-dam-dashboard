@@ -21,6 +21,8 @@ Contributors:
 <link rel="import" href="../nuxeo-elements/nuxeo-document.html">
 <link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
 <link rel="import" href="../nuxeo-audit-data/nuxeo-audit-data.html">
+<link rel="import" href="nuxeo-data-table.html">
+
 <!--
 An element providing a dashboard for Nuxeo DAM applications.
 
@@ -39,25 +41,12 @@ Example:
   <template>
 
     <!-- Top downloads --------------------------------------------------->
-    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="10" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}">
+    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="5" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}">
     </nuxeo-audit-data>
-    <paper-card heading="Top 10 Downloads" elevation="2">
+    <paper-card heading="Top 5 Downloads" elevation="2">
       <div class="card-content">
-        <table>
-          <tr>
-            <th>File</th>
-            <th>Count</th>
-          </tr>
-          <template is="dom-repeat" items="[[downloads]]" as="downloadedDoc">
-            <tr>
-              <td>
-                <nuxeo-document auto doc-id="[[downloadedDoc.key]]" response="{{downloadedDoc.instance}}"></nuxeo-document>
-                <span>[[downloadedDoc.instance.properties.file:content.name]]</span>
-              </td>
-              <td>[[downloadedDoc.value]]</td>
-            </tr>
-          </template>
-        </table>
+        <nuxeo-data-table columns='[{"key": "key", "title": "File"}, {"key": "value", "title": "Downloads"}]' data="[[_table(downloads)]]">
+        </nuxeo-data-table>
       </div>
     </paper-card>
 
@@ -67,7 +56,7 @@ Example:
     </nuxeo-repository-data>
     <paper-card heading="Document Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(typeCount)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(typeCount)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -77,7 +66,7 @@ Example:
     </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(pictureTypes)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(pictureTypes)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -87,7 +76,7 @@ Example:
     </nuxeo-repository-data>
     <paper-card heading="Video Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(videoTypes)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(videoTypes)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -98,7 +87,7 @@ Example:
 
     <paper-card heading="Top Contributors" elevation="2">
       <div class="card-content">
-        <google-chart type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
+        <google-chart class="center-chart" type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -113,7 +102,7 @@ Example:
     <!-- Display a Pie Chart with our data -->
     <paper-card heading="Serial Review Initiator" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_SerialDocumentReview)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_SerialDocumentReview)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -138,7 +127,7 @@ Example:
     <!-- Display a Pie Chart with our data -->
     <paper-card heading="Parallel Review Initiator" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_ParallelDocumentReview)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "User", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(initiators_ParallelDocumentReview)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -158,12 +147,6 @@ Example:
 </dom-module>
 
 <script>
-  document.addEventListener('polymer-ready', function () {
-    document.querySelector('#auditSearch').execute();
-  });
-</script>
-
-<script>
   Polymer({
 
     is: 'dam-dashboard',
@@ -179,6 +162,24 @@ Example:
       return data.map(function (e) {
         return [e.key, e.value];
       });
+    },
+
+    _prettyRows: function (data) {
+      // Look at picture:info in the object properties for picture. Need to check the others.
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].key.indexOf("wordprocessing") > -1) data[i].key = "Word";
+        if (data[i].key.indexOf("spreadsheet") > -1) data[i].key = "Excel";
+        if (data[i].key.indexOf("pdf") > -1) data[i].key = "PDF";
+        if (data[i].key.indexOf("presentation") > -1) data[i].key = "Powerpoint";
+        if (data[i].key.indexOf("keynote") > -1) data[i].key = "Keynote";
+        if (data[i].key.indexOf("text") > -1) data[i].key = "Plain Text";
+        if (data[i].key.indexOf("jpeg") > -1) data[i].key = "JPEG";
+        if (data[i].key.indexOf("png") > -1) data[i].key = "PNG";
+        if (data[i].key.indexOf("photoshop") > -1) data[i].key = "Photoshop";
+        if (data[i].key.indexOf("mp4") > -1) data[i].key = "MP4";
+        if (data[i].key.indexOf("quicktime") > -1) data[i].key = "Quicktime";
+      }
+      return this._rows(data);
     },
 
     _asDuration: function (duration) {
@@ -205,31 +206,6 @@ Example:
       return result;
     },
 
-    auditQuery: function () {
-      var myQuery = {
-        "match_all": {}
-      };
-      return myQuery;
-    },
-
-    _prettyRows: function (data) {
-      // Look at picture:info in the object properties for picture. Need to check the others.
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].key.indexOf("wordprocessing") > -1) data[i].key = "Word";
-        if (data[i].key.indexOf("spreadsheet") > -1) data[i].key = "Excel";
-        if (data[i].key.indexOf("pdf") > -1) data[i].key = "PDF";
-        if (data[i].key.indexOf("presentation") > -1) data[i].key = "Powerpoint";
-        if (data[i].key.indexOf("keynote") > -1) data[i].key = "Keynote";
-        if (data[i].key.indexOf("text") > -1) data[i].key = "Plain Text";
-        if (data[i].key.indexOf("jpeg") > -1) data[i].key = "JPEG";
-        if (data[i].key.indexOf("png") > -1) data[i].key = "PNG";
-        if (data[i].key.indexOf("photoshop") > -1) data[i].key = "Photoshop";
-        if (data[i].key.indexOf("mp4") > -1) data[i].key = "MP4";
-        if (data[i].key.indexOf("quicktime") > -1) data[i].key = "Quicktime";
-      }
-      return this._rows(data);
-    },
-
     // produces a table with "Label", "Parent", "Value"] for usage in a treemap
     _treeFor: function (data, separator) {
       var separator = separator || '/',
@@ -252,6 +228,15 @@ Example:
         res.push([key, "All", parents[key]]);
       }
       return res;
+    },
+
+    _table: function (data) {
+      return data.map(function (e) {
+        return {
+          key: e.key,
+          value: e.value
+        };
+      }.bind(this));
     }
 
   });
