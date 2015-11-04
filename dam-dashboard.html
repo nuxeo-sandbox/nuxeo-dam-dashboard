@@ -14,10 +14,12 @@ Lesser General Public License for more details.
 Contributors:
   Josh Fletcher <jfletcher@nuxeo.com>
 -->
-<link rel="import" href="bower_components/paper-card/paper-card.html">
-<link rel="import" href="bower_components/iron-icons/image-icons.html">
-<link rel="import" href="bower_components/google-chart/google-chart.html">
-<link rel="import" href="bower_components/nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+<link rel="import" href="../google-chart/google-chart.html">
+<link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
+<link rel="import" href="../nuxeo-audit-data/nuxeo-audit-data.html">
 <!--
 An element providing a dashboard for Nuxeo DAM applications.
 
@@ -34,6 +36,9 @@ Example:
   <link rel="import" type="css" href="dam-dashboard.css">
 
   <template>
+
+    <!-- Top downloads --------------------------------------------------->
+    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="10" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}"></nuxeo-audit-data>
 
     <!-- File types --------------------------------------------------->
     <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
@@ -140,6 +145,12 @@ Example:
   Polymer({
 
     is: 'dam-dashboard',
+
+    // Expose startDate and endDate as properties
+    properties: {
+      startDate: String,
+      endDate: String
+    },
 
     // Transform our data for usage with Google Charts
     _rows: function (data) {
