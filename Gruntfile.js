@@ -75,7 +75,9 @@ module.exports = function (grunt) {
               require('connect-livereload')({
                 port: LIVERELOAD_PORT
               }),
-              mountFolder(yeomanConfig.app)
+              mountFolder(yeomanConfig.app),
+              mountFolder('bower_components')
+
             ];
           }
         }

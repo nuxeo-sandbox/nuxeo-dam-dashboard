@@ -1,0 +1,79 @@
+<!--
+(C) Copyright 2015 Nuxeo SA (http://nuxeo.com/) and contributors.
+
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the GNU Lesser General Public License
+(LGPL) version 2.1 which accompanies this distribution, and is available at
+http://www.gnu.org/licenses/lgpl.html
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+Contributors:
+  Nelson Silva <nsilva@nuxeo.com>
+-->
+<link rel="import" href="../nuxeo-elements/nuxeo-document.html">
+
+<!-- based on sweet-material-table -->
+<dom-module id="dam-dashboard-downloads-table">
+
+  <link rel="import" type="css" href="dam-dashboard-downloads-table.css" />
+
+  <template>
+
+    <div id="table">
+      <div class="thead">
+        <div class="tr horizontal layout">
+          <template is="dom-repeat" items="{{columns}}" as="column">
+            <div class="flex th" data-column$="[[column.key]]">
+              <span>[[column.title]]</span>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <div class="tbody">
+        <template is="dom-repeat" items="{{data}}" as="downloadedDoc">
+          <div class="tr horizontal layout" index="[[index]]">
+            <div class="flex td">
+              <nuxeo-document auto doc-id="[[downloadedDoc.key]]" response="{{downloadedDoc.instance}}"></nuxeo-document>
+              <span>[[downloadedDoc.instance.properties.file:content.name]]</span>
+            </div>
+            <div class="flex td">
+              <span>[[downloadedDoc.value]]</span>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'dam-dashboard-downloads-table',
+      properties: {
+        data: {
+          type: Array,
+          notify: true
+        },
+        columns: {
+          type: Array,
+          notify: true,
+          value: function () {
+            return [];
+          }
+        }
+      },
+
+      _value: function (row, column) {
+        if (row && column) {
+          return row[column.key];
+        }
+      }
+
+    })
+  </script>
+</dom-module>

@@ -21,7 +21,8 @@ Contributors:
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>DAM Dashboard Demo</title>
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../moment/min/moment-with-locales.js"></script>
 
   <link rel="import" href="../elements.html">
 
@@ -37,10 +38,6 @@ Contributors:
       display: table;
       margin: 0 auto;
       color: #213f7d;
-    }
-    
-    #header-spacer {
-      width: 186px;
     }
     
     #logo {
@@ -70,18 +67,24 @@ Contributors:
       <paper-toolbar>
         <div id="logo"></div>
         <div id="header-title">DAM Dashboard</div>
-        <div id="header-spacer"></div>
+        <div id="header-dateRange">
+          <input type="date" value="{{startDate::change}}">
+          <input type="date" value="{{endDate::change}}">
+        </div>
       </paper-toolbar>
 
       <!-- Include our element and specify a start and end date -->
-      <dam-dashboard></dam-dashboard>
+      <dam-dashboard start-date="[[startDate]]" end-date="[[endDate]]"></dam-dashboard>
 
     </paper-header-panel>
 
   </template>
-
+  <script>
+    var t = document.querySelector('template');
+    var currentDate = moment();
+    t.endDate = currentDate.format("YYYY-MM-DD");
+    t.startDate = currentDate.subtract(6, 'months').format("YYYY-MM-DD");
+  </script>
 </body>
-
-
 
 </html>
