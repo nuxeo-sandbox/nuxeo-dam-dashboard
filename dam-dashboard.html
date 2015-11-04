@@ -72,6 +72,7 @@ Example:
       </div>
     </paper-card>
 
+    <!-- --------------------------------------------------->
     <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Video Types" elevation="2">
@@ -170,8 +171,6 @@ Example:
         if (data[i].key.indexOf("presentation") > -1) data[i].key = "Powerpoint";
         if (data[i].key.indexOf("keynote") > -1) data[i].key = "Keynote";
         if (data[i].key.indexOf("text") > -1) data[i].key = "Plain Text";
-        if (data[i].key.indexOf("jpeg") > -1) data[i].key = "JPEG";
-        if (data[i].key.indexOf("png") > -1) data[i].key = "PNG";
         if (data[i].key.indexOf("photoshop") > -1) data[i].key = "Photoshop";
         if (data[i].key.indexOf("mp4") > -1) data[i].key = "MP4";
         if (data[i].key.indexOf("quicktime") > -1) data[i].key = "Quicktime";
