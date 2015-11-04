@@ -35,13 +35,12 @@ Example:
 
   <template>
 
-
-
-    <nuxeo-repository-data grouped-by="ecm:primaryType" data="{{typeCount}}">
+    <!-- File types --------------------------------------------------->
+    <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
     </nuxeo-repository-data>
     <paper-card heading="Document Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(typeCount)]]">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(typeCount)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -51,7 +50,7 @@ Example:
     </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(pictureTypes)]]">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(pictureTypes)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -61,7 +60,18 @@ Example:
     </nuxeo-repository-data>
     <paper-card heading="Video Types" elevation="2">
       <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(videoTypes)]]">
+        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(videoTypes)]]">
+        </google-chart>
+      </div>
+    </paper-card>
+
+    <!-- Top Contributors --------------------------------------------------->
+    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topAdvertizers}}">
+    </nuxeo-repository-data>
+
+    <paper-card heading="Top Contributors" elevation="2">
+      <div class="card-content">
+        <google-chart type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
         </google-chart>
       </div>
     </paper-card>
@@ -116,16 +126,6 @@ Example:
       </div>
     </paper-card>
 
-
-    <nuxeo-es-search id="auditSearch" query="auditQuery()" index="audit" hits={{auditHits}} execute></nuxeo-es-search>
-    <paper-card heading="Most Downloaded" elevation="2">
-      <div class="card-content">
-        <google-chart type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(auditHits)]]">
-        </google-chart>
-      </div>
-    </paper-card>
-
-
   </template>
 
 </dom-module>
@@ -177,6 +177,48 @@ Example:
         "match_all": {}
       };
       return myQuery;
+    },
+
+    _prettyRows: function (data) {
+      // Look at picture:info in the object properties for picture. Need to check the others.
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].key.indexOf("wordprocessing") > -1) data[i].key = "Word";
+        if (data[i].key.indexOf("spreadsheet") > -1) data[i].key = "Excel";
+        if (data[i].key.indexOf("pdf") > -1) data[i].key = "PDF";
+        if (data[i].key.indexOf("presentation") > -1) data[i].key = "Powerpoint";
+        if (data[i].key.indexOf("keynote") > -1) data[i].key = "Keynote";
+        if (data[i].key.indexOf("text") > -1) data[i].key = "Plain Text";
+        if (data[i].key.indexOf("jpeg") > -1) data[i].key = "JPEG";
+        if (data[i].key.indexOf("png") > -1) data[i].key = "PNG";
+        if (data[i].key.indexOf("photoshop") > -1) data[i].key = "Photoshop";
+        if (data[i].key.indexOf("mp4") > -1) data[i].key = "MP4";
+        if (data[i].key.indexOf("quicktime") > -1) data[i].key = "Quicktime";
+      }
+      return this._rows(data);
+    },
+
+    // produces a table with "Label", "Parent", "Value"] for usage in a treemap
+    _treeFor: function (data, separator) {
+      var separator = separator || '/',
+        res = [["", "Parent", "Value"], ["All", null, 0]],
+        parents = {}; // aggregate results in the parent
+      data.forEach(function (e) {
+        var parts = e.key.split(separator),
+          parentKey = parts[0],
+          key = parts[1];
+        res.push([key, parentKey, e.value]);
+
+        if (!parents[parentKey]) {
+          parents[parentKey] = e.value;
+        } else {
+          parents[parentKey] += e.value;
+        }
+      });
+
+      for (var key in parents) {
+        res.push([key, "All", parents[key]]);
+      }
+      return res;
     }
 
   });
