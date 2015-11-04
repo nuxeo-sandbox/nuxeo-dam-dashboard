@@ -14,47 +14,6 @@ Lesser General Public License for more details.
 Contributors:
   Nelson Silva <nsilva@nuxeo.com>
 -->
-<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-icons/image-icons.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../iron-input/iron-input.html">
-<link rel="import" href="../iron-list/iron-list.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
-
-<link rel="import" href="../font-roboto/roboto.html">
-
-<link rel="import" href="../paper-styles/paper-styles.html">
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../paper-header-panel/paper-header-panel.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../paper-tabs/paper-tabs.html">
-<link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../paper-item/paper-item-body.html">
-<link rel="import" href="../paper-item/paper-icon-item.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
-
-<link rel="import" href="../neon-animation/neon-animated-pages.html">
-<link rel="import" href="../neon-animation/neon-animatable.html">
-<link rel="import" href="../neon-animation/neon-animations.html">
-
-<link rel="import" href="../nuxeo-elements/nuxeo-connection.html">
-<link rel="import" href="../nuxeo-elements/nuxeo-resource.html">
-
-<!-- Dashboard elements -->
-<link rel="import" href="../paper-card/paper-card.html">
-<link rel="import" href="../chart-elements/chart-elements.html">
-<link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
-
-
-
-<!-- Date polyfill -->
-<script src="../better-dom/dist/better-dom.js"></script>
-<script src="../better-i18n-plugin/dist/better-i18n-plugin.js"></script>
-<script src="../better-dateinput-polyfill/dist/better-dateinput-polyfill.js"></script>
-
 <!-- based on sweet-material-table -->
 <dom-module id="nuxeo-data-table">
 
@@ -66,12 +25,7 @@ Contributors:
       <div class="thead">
         <div class="tr horizontal layout">
           <template is="dom-repeat" items="{{columns}}" as="column">
-            <div class="flex th" data-column$="[[column.key]]" on-click="_sortColumn">
-
-              <iron-icon class="sorted-descending" icon="icons:arrow-drop-down"></iron-icon>
-
-              <iron-icon class="sorted-ascending" icon="icons:arrow-drop-up"></iron-icon>
-
+            <div class="flex th" data-column$="[[column.key]]">
               <span>[[column.title]]</span>
             </div>
           </template>
@@ -105,53 +59,12 @@ Contributors:
           value: function () {
             return [];
           }
-        },
-        sortColumn: {
-          type: String,
-          notify: true
-        },
-        sortDirection: {
-          type: String,
-          notify: true
         }
       },
-      observers: [
-        '_sortDirectionChanged(sortColumn,sortDirection)'
-      ],
 
       _value: function (row, column) {
         if (row && column) {
           return row[column.key];
-        }
-      },
-
-      _sortColumn: function (e) {
-        var column = e.currentTarget.attributes['data-column'].value;
-
-        if (this.sortColumn === column) {
-          if (this.sortDirection === 'ascending') {
-            this.sortColumn = null;
-            this.sortDirection = null;
-          } else {
-            this.sortDirection = 'ascending';
-          }
-        } else {
-          this.sortColumn = column;
-          this.sortDirection = 'descending';
-        }
-      },
-      _sortDirectionChanged: function (sortColumn, sortDirection) {
-        // Clear the classes on the ths
-        var tableHeaders = this.$.table.querySelectorAll('.thead .th');
-
-        for (var i = 0, ii = tableHeaders.length; i < ii; i++) {
-          var th = tableHeaders[i];
-          th.classList.remove('sorted-ascending');
-          th.classList.remove('sorted-descending');
-
-          if (this.sortDirection && this.sortColumn && th.attributes['data-column'] && th.attributes['data-column'].value === this.sortColumn) {
-            th.classList.add('sorted-' + this.sortDirection);
-          }
         }
       }
 
