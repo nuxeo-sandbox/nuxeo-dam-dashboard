@@ -40,9 +40,9 @@ Example:
   <template>
 
     <!-- Top downloads --------------------------------------------------->
-    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="5" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}">
+    <nuxeo-audit-data event-id="download" where='[{"term": {"downloadReason": "download"}},{"term": {"blobXPath": "blobholder:0"}}]' grouped-by="docUUID" group-limit="7" start-date="[[startDate]]" end-date="[[endDate]]" data="{{downloads}}">
     </nuxeo-audit-data>
-    <paper-card heading="Top 5 Downloads" elevation="2">
+    <paper-card heading="Top Downloads" elevation="2">
       <div class="card-content">
         <dam-dashboard-downloads-table columns='[{"key": "key", "title": "File"}, {"key": "value", "title": "Downloads"}]' data="[[_table(downloads)]]">
         </dam-dashboard-downloads-table>
