@@ -50,17 +50,19 @@ Example:
     </paper-card>
 
 
-    <!-- File types --------------------------------------------------->
-    <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
+    <!-- Top Contributors --------------------------------------------------->
+    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topAdvertizers}}">
     </nuxeo-repository-data>
-    <paper-card heading="Document Types" elevation="2">
+
+    <paper-card heading="Top Contributors" elevation="2">
       <div class="card-content">
-        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(typeCount)]]">
+        <google-chart class="center-chart" type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
         </google-chart>
       </div>
     </paper-card>
 
 
+    <!-- File types --------------------------------------------------->
     <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{pictureTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
@@ -69,7 +71,6 @@ Example:
         </google-chart>
       </div>
     </paper-card>
-
 
     <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
     </nuxeo-repository-data>
@@ -80,13 +81,11 @@ Example:
       </div>
     </paper-card>
 
-    <!-- Top Contributors --------------------------------------------------->
-    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topAdvertizers}}">
+    <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
     </nuxeo-repository-data>
-
-    <paper-card heading="Top Contributors" elevation="2">
+    <paper-card heading="Document Types" elevation="2">
       <div class="card-content">
-        <google-chart class="center-chart" type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(typeCount)]]">
         </google-chart>
       </div>
     </paper-card>
