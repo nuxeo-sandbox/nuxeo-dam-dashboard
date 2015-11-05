@@ -157,6 +157,8 @@ Example:
 
 </dom-module>
 
+<script src="mimeTypes.js"></script>
+
 <script>
   Polymer({
 
@@ -235,7 +237,10 @@ Example:
     _prettyRows: function (data) {
       for (var i = 0; i < data.length; i++) {
         var mimeObject = mimeTypes.findByMimeType(data[i].key);
-        data[i].key = mimeObject.fileExtensions;
+        // Only change the value if we find something.
+        if (mimeObject) {
+          data[i].key = mimeObject.fileExtensions;
+        }
       }
       return this._rows(data);
     }
