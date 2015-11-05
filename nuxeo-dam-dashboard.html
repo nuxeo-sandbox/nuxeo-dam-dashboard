@@ -21,21 +21,23 @@ Contributors:
 <link rel="import" href="../nuxeo-elements/nuxeo-document.html">
 <link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
 <link rel="import" href="../nuxeo-audit-data/nuxeo-audit-data.html">
-<link rel="import" href="dam-dashboard-downloads-table.html">
+<link rel="import" href="nuxeo-dam-dashboard-downloads-table.html">
 <!--
 An element providing a dashboard for Nuxeo DAM applications.
 
 Example:
 
-    <dam-dashboard></dam-dashboard>
+    <nuxeo-dam-dashboard start-date="2015-01-01" 
+                         end-date="2015-12-31">
+    </nuxeo-dam-dashboard>
 
 @group Nuxeo Dashboards
-@element dam-dashboard
+@element nuxeo-dam-dashboard
 @demo demo/index.html
 -->
-<dom-module id="dam-dashboard">
+<dom-module id="nuxeo-dam-dashboard">
 
-  <link rel="import" type="css" href="dam-dashboard.css">
+  <link rel="import" type="css" href="nuxeo-dam-dashboard.css">
 
   <template>
 
@@ -44,8 +46,8 @@ Example:
     </nuxeo-audit-data>
     <paper-card heading="Top Downloads" elevation="2">
       <div class="card-content">
-        <dam-dashboard-downloads-table columns='[{"key": "key", "title": "File"}, {"key": "value", "title": "Downloads"}]' data="[[_table(downloads)]]">
-        </dam-dashboard-downloads-table>
+        <nuxeo-dam-dashboard-downloads-table columns='[{"key": "key", "title": "File"}, {"key": "value", "title": "Downloads"}]' data="[[_table(downloads)]]">
+        </nuxeo-dam-dashboard-downloads-table>
       </div>
     </paper-card>
 
@@ -162,7 +164,7 @@ Example:
 <script>
   Polymer({
 
-    is: 'dam-dashboard',
+    is: 'nuxeo-dam-dashboard',
 
     // Expose startDate and endDate as properties
     properties: {

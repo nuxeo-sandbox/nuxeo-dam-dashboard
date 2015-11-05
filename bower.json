@@ -1,5 +1,5 @@
 {
-  "name": "dam-dashboard",
+  "name": "nuxeo-dam-dashboard",
   "version": "0.0.1",
   "authors": [
     "Josh Fletcher <jfletcher@nuxeo.com>"
@@ -11,10 +11,10 @@
     "seed"
   ],
   "main": [
-    "dam-dashboard.html"
+    "nuxeo-dam-dashboard.html"
   ],
   "license": "LGPL",
-  "homepage": "https://github.com/jfletcher-nuxeo/dam-dashboard",
+  "homepage": "https://github.com/jfletcher-nuxeo/nuxeo-dam-dashboard",
   "ignore": [
     "/.*",
     "/test/"
