@@ -1,6 +1,6 @@
 # DAM Dashboard
 
-A dashboard for Nuxeo applications that contain the DAM add-on.
+A dashboard for Nuxeo applications that contain the DAM add-on. It should work with any Nuxeo application unless the DAM document types and/or audit events have been overridden.
 
 These are Polymer Web components.
 
@@ -8,9 +8,11 @@ These are Polymer Web components.
 
 The DAM add-on must be installed in the Nuxeo application.
 
-By default a proxy is created to localhost, to handle Nuxeo authentication.  Alternatively you can modify "Gruntfile.js" and change the proxy settings.
+By default a proxy is created to localhost, to handle Nuxeo authentication.  You can modify "Gruntfile.js" to change the proxy settings.
 
-Install Node.js (I use Homebrew) then:
+Install Node.js (I use Homebrew)
+
+Navigate to the folder containing `dam-dashboard.html` in shell/terminal and then.
 
     npm install -g bower
     npm install -g grunt
@@ -22,6 +24,14 @@ Install Node.js (I use Homebrew) then:
 You can run it via:
 
     grunt
+
+You can alternatively run it via `polyserve` but you need to make a few changes:
+
+* Install polyserve:
+  * `npm -install -g polyserve'
+* Edit `demo/index.html` and modify the `<nuxeo-connection>` element with the URL for the server. For example:
+  * `<nuxeo-connection url="http://localhost:8080/nuxeo"></nuxeo-connection>`
+  * The user name and password can be included here as well. See the [`nuxeo-elements` documentation](https://doc.nuxeo.com/x/XJCRAQ).
 
 ## About Nuxeo
 
