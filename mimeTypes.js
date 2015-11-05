@@ -162,6 +162,10 @@ var mimeTypes = {
       "fileExtensions": ".opf",
       "friendlyName": ""
     }, {
+      "mimeType": "application/octet-stream",
+      "fileExtensions": ".?",
+      "friendlyName": "Binary"
+    }, {
       "mimeType": "application/ogg",
       "fileExtensions": ".ogx",
       "friendlyName": ""
