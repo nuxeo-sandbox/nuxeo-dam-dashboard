@@ -19,11 +19,15 @@ Navigate to the folder containing `dam-dashboard.html` in shell/terminal and the
 
 ## Usage
 
+### Grunt
+
 You can run it via:
 
     grunt
 
 By default a proxy is created to localhost, to handle Nuxeo authentication.  You can modify "Gruntfile.js" to change the proxy settings.
+
+### Polyserve
 
 You can alternatively run it via `polyserve` but you need to make a few changes:
 
@@ -32,6 +36,12 @@ You can alternatively run it via `polyserve` but you need to make a few changes:
 * Edit `demo/index.html` and modify the `<nuxeo-connection>` element with the URL for the server. For example:
   * `<nuxeo-connection url="http://localhost:8080/nuxeo"></nuxeo-connection>`
   * The user name and password can be included here as well. See the [`nuxeo-elements` documentation](https://doc.nuxeo.com/x/XJCRAQ).
+
+Then run it:
+
+    polyserve -p 3000
+
+Once running, you can checkout the demo at `http://localhost:3000/components/nuxeo-dam-dashboard/demo`.
 
 ## About Nuxeo
 
