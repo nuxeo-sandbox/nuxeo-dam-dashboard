@@ -63,15 +63,25 @@ Example:
 
 
     <!-- File types --------------------------------------------------->
-    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{pictureTypes}}">
+    <!-- TODO: filter deleted files; it requires a"must_not" predicate
+         for ES; nuxeo-es-query does not support this OOTB. -->
+
+    <!-- Pictures -->
+    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="picture:info.format" data="{{pictureTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
       <div class="card-content">
-        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_prettyRows(pictureTypes)]]">
+        <google-chart class="center-chart" type="pie" cols='[{"label": "Type", "type": "string"},{"label": "Value", "type": "number"}]' rows="[[_rows(pictureTypes)]]">
         </google-chart>
       </div>
     </paper-card>
 
+    <!-- Videos -->
+    <!-- Note that _prettyRows is used because Nuxeo doesn't have a useful
+         field for the video"type". For example there is vid:info.format
+         but it contains a list of types, not a single type. There is
+         picture:info.format but, for example, the format of an MP4 is
+         JPEG. And dc:format is null. -->
     <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Video Types" elevation="2">
@@ -81,6 +91,9 @@ Example:
       </div>
     </paper-card>
 
+    <!-- Files -->
+    <!-- Note that _prettyRows is used because Nuxeo doesn't have a useful
+         field for the file"type". -->
     <nuxeo-repository-data ecm-primary-type="File" grouped-by="file:content.mime-type" data="{{typeCount}}">
     </nuxeo-repository-data>
     <paper-card heading="Document Types" elevation="2">
@@ -144,6 +157,8 @@ Example:
 
 </dom-module>
 
+<script src="mimeTypes.js"></script>
+
 <script>
   Polymer({
 
@@ -160,24 +175,6 @@ Example:
       return data.map(function (e) {
         return [e.key, e.value];
       });
-    },
-
-    _prettyRows: function (data) {
-      // Look at picture:info in the object properties for picture. Need to check the others.
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].key.indexOf("wordprocessing") > -1) data[i].key = "Word";
-        if (data[i].key.indexOf("spreadsheet") > -1) data[i].key = "Excel";
-        if (data[i].key.indexOf("pdf") > -1) data[i].key = "PDF";
-        if (data[i].key.indexOf("presentation") > -1) data[i].key = "Powerpoint";
-        if (data[i].key.indexOf("keynote") > -1) data[i].key = "Keynote";
-        if (data[i].key.indexOf("text") > -1) data[i].key = "Plain Text";
-        if (data[i].key.indexOf("jpeg") > -1) data[i].key = "JPEG";
-        if (data[i].key.indexOf("png") > -1) data[i].key = "PNG";
-        if (data[i].key.indexOf("photoshop") > -1) data[i].key = "Photoshop";
-        if (data[i].key.indexOf("mp4") > -1) data[i].key = "MP4";
-        if (data[i].key.indexOf("quicktime") > -1) data[i].key = "Quicktime";
-      }
-      return this._rows(data);
     },
 
     _asDuration: function (duration) {
@@ -235,6 +232,17 @@ Example:
           value: e.value
         };
       }.bind(this));
+    },
+
+    _prettyRows: function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var mimeObject = mimeTypes.findByMimeType(data[i].key);
+        // Only change the value if we find something.
+        if (mimeObject) {
+          data[i].key = mimeObject.fileExtensions;
+        }
+      }
+      return this._rows(data);
     }
 
   });
