@@ -51,12 +51,12 @@ Example:
 
 
     <!-- Top Contributors --------------------------------------------------->
-    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topAdvertizers}}">
+    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topContributors}}">
     </nuxeo-repository-data>
 
     <paper-card heading="Top Contributors" elevation="2">
       <div class="card-content">
-        <google-chart class="center-chart" type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topAdvertizers)]]">
+        <google-chart class="center-chart" type='treemap' options='{"maxPostDepth":2}' data="[[_treeFor(topContributors)]]">
         </google-chart>
       </div>
     </paper-card>
