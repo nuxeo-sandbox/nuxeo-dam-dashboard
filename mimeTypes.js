@@ -25,7 +25,9 @@ var mimeTypes = {
     return null;
   },
 
-  // Mainly From http://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=markup
+  // Mainly From:
+  // http://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=markup
+  // https://developers.google.com/drive/web/mime-types
   mimeTypes: [
     {
       "mimeType": "application/x-gzip",
@@ -663,6 +665,46 @@ var mimeTypes = {
       "mimeType": "application/vnd.gmx",
       "fileExtensions": ".gmx",
       "friendlyName": ""
+    }, {
+      "mimeType": "application/vnd.google-apps.document",
+      "fileExtensions": ".gdoc",
+      "friendlyName": "Google Docs"
+    }, {
+      "mimeType": "application/vnd.google-apps.drawing",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Drawing"
+    }, {
+      "mimeType": "application/vnd.google-apps.file",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Drive file"
+    }, {
+      "mimeType": "application/vnd.google-apps.folder",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Drive folder"
+    }, {
+      "mimeType": "application/vnd.google-apps.form",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Forms"
+    }, {
+      "mimeType": "application/vnd.google-apps.fusiontable",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Fusion Tables"
+    }, {
+      "mimeType": "application/vnd.google-apps.presentation",
+      "fileExtensions": ".gslides",
+      "friendlyName": "Google Slides"
+    }, {
+      "mimeType": "application/vnd.google-apps.script",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Apps Scripts"
+    }, {
+      "mimeType": "application/vnd.google-apps.sites",
+      "fileExtensions": ".g?",
+      "friendlyName": "Google Sites"
+    }, {
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "fileExtensions": ".gsheet",
+      "friendlyName": "Google Sheets"
     }, {
       "mimeType": "application/vnd.google-earth.kml+xml",
       "fileExtensions": ".kml",
