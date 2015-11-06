@@ -67,7 +67,9 @@ Example:
 
   <script>
     Polymer({
+
       is: 'nuxeo-dam-dashboard-downloads-table',
+
       properties: {
         data: {
           type: Array,
@@ -79,12 +81,6 @@ Example:
           value: function () {
             return [];
           }
-        }
-      },
-
-      _value: function (row, column) {
-        if (row && column) {
-          return row[column.key];
         }
       }
 
