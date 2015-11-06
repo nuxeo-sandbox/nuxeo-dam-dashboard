@@ -16,7 +16,20 @@ Contributors:
   Josh Fletcher <jfletcher@nuxeo.com>
 -->
 <link rel="import" href="../nuxeo-elements/nuxeo-document.html">
+<!--
+An element for listing the names of files and some sort of aggregate count.
+I'm not sure how I could parameterize the property to get the file name
+(doc.properties.file:content.name) so I'm left with this semi-hard coded element.
 
+Example:
+
+    <nuxeo-dam-dashboard-downloads-table columns='[{"key": "key", "title": "File"}, {"key": "value", "title": "Downloads"}]' 
+                                         data="[[_table(downloads)]]">
+    </nuxeo-dam-dashboard-downloads-table>
+
+@group Nuxeo Dashboards
+@element nuxeo-dam-dashboard-downloads-table
+-->
 <!-- based on sweet-material-table -->
 <dom-module id="nuxeo-dam-dashboard-downloads-table">
 
