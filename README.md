@@ -32,7 +32,7 @@ By default a proxy is created to localhost, to handle Nuxeo authentication.  You
 You can alternatively run it via `polyserve` but you need to make a few changes:
 
 * Install polyserve:
-  * `npm -install -g polyserve`
+  * `npm install -g polyserve`
 * Edit `demo/index.html` and modify the `<nuxeo-connection>` element with the URL for the server. For example:
   * `<nuxeo-connection url="http://localhost:8080/nuxeo"></nuxeo-connection>`
   * The user name and password can be included here as well. See the [`nuxeo-elements` documentation](https://doc.nuxeo.com/x/XJCRAQ).
