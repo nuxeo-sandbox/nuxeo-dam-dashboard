@@ -21,6 +21,7 @@ Contributors:
 <link rel="import" href="../nuxeo-elements/nuxeo-document.html">
 <link rel="import" href="../nuxeo-dataviz-elements/nuxeo-dataviz-elements.html">
 <link rel="import" href="../nuxeo-audit-data/nuxeo-audit-data.html">
+<link rel="import" href="../nuxeo-util-mimetypes/nuxeo-util-mimetypes.html">
 <link rel="import" href="nuxeo-dam-dashboard-downloads-table.html">
 <!--
 An element providing a dashboard for Nuxeo DAM applications.
@@ -159,8 +160,6 @@ Example:
 
 </dom-module>
 
-<script src="mimeTypes.js"></script>
-
 <script>
   Polymer({
 
@@ -236,12 +235,27 @@ Example:
       }.bind(this));
     },
 
+    // Convert the MIME Type so something more friendly for the user.
+    _convertMimeType: function (mimeType, friendly) {
+      var mimeTypeLookup = document.createElement('nuxeo-util-mimetypes');
+      mimeTypeLookup.mimeType = mimeType;
+      mimeTypeLookup.friendly = friendly;
+      return mimeTypeLookup._query();
+    },
+
+    // Instead of just returning the rows (using _rows), convert the MIME Types to something more friendly.
     _prettyRows: function (data) {
       for (var i = 0; i < data.length; i++) {
-        var mimeObject = mimeTypes.findByMimeType(data[i].key);
-        // Only change the value if we find something.
-        if (mimeObject) {
-          data[i].key = mimeObject.fileExtensions;
+        var mimeType = data[i].key;
+        //     <nuxeo-util-mimetypes mime-type="application/pdf" data="{{pdfExts}}"></nuxeo-util-mimetypes>
+        var friendlyName = this._convertMimeType(mimeType, 'true')
+        if (friendlyName) {
+          data[i].key = friendlyName;
+        } else {
+          var fileExts = this._convertMimeType(mimeType);
+          if (fileExts) {
+            data[i].key = fileExts;
+          }
         }
       }
       return this._rows(data);
