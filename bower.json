@@ -28,7 +28,7 @@
     "nuxeo-elements": "nuxeo/nuxeo-elements#~0.2.1",
     "nuxeo-dataviz-elements": "nuxeo/nuxeo-dataviz-elements#~0.2.1",
     "nuxeo-audit-data": "jfletcher-nuxeo/nuxeo-audit-data#~1.0.0",
-    "nuxeo-util-mimetypes": "jfletcher-nuxeo/nuxeo-util-mimetypes#~1.0.1"
+    "nuxeo-util-mimetypes": "jfletcher-nuxeo/nuxeo-util-mimetypes#~1.0.2"
   },
   "devDependencies": {
     "moment": "~2.10.6"
