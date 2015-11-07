@@ -1,10 +1,10 @@
 {
   "name": "nuxeo-dam-dashboard",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "authors": [
     "Josh Fletcher <jfletcher@nuxeo.com>"
   ],
-  "description": "Dashboard for Nuxeo applications with the DAM add-on.",
+  "description": "Dashboard for Nuxeo applications that use the DAM add-on.",
   "keywords": [
     "web-component",
     "polymer",

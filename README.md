@@ -1,4 +1,4 @@
-# Nuxeo DAM Dashboard
+# About Nuxeo DAM Dashboard
 
 A dashboard for Nuxeo applications that contain the DAM add-on. It should work with any Nuxeo application unless the DAM document types and/or audit events have been overridden.
 
