@@ -66,11 +66,11 @@ Example:
 
 
     <!-- File types --------------------------------------------------->
-    <!-- TODO: filter deleted files; it requires a"must_not" predicate
+    <!-- TODO: filter deleted files; it requires a "must_not" predicate
          for ES; nuxeo-es-query does not support this OOTB. -->
 
     <!-- Pictures -->
-    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="picture:info.format" data="{{pictureTypes}}">
+    <nuxeo-repository-data ecm-primary-type="Picture" where='[{"term": {"ecm:isVersion": "false"}}]' grouped-by="picture:info.format" data="{{pictureTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Picture Types" elevation="2">
       <div class="card-content">
@@ -85,7 +85,7 @@ Example:
          but it contains a list of types, not a single type. There is
          picture:info.format but, for example, the format of an MP4 is
          JPEG. And dc:format is null. -->
-    <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
+    <nuxeo-repository-data ecm-primary-type="Video" where='[{"term": {"ecm:isVersion": "false"}}]' grouped-by="file:content.mime-type" data="{{videoTypes}}">
     </nuxeo-repository-data>
     <paper-card heading="Video Types" elevation="2">
       <div class="card-content">
