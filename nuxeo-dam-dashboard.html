@@ -54,7 +54,15 @@ Example:
 
 
     <!-- Top Contributors --------------------------------------------------->
-    <nuxeo-repository-data where='[{"term": {"ecm:isProxy": "0"}}]' grouped-by="dc:lastContributor" data="{{topContributors}}">
+    <!-- Note: this is a bit misleading especially in an app without a lot of
+         data. This will return things like workflow definitions, system
+         messages, etc. Since it's a treemap it's probably not a HUGE deal.
+         I was unable to come up with a way to effectively filter this query.
+         For example I might want to check ecm:primaryType for "Picture",
+         "Video", and "File". But I can't do that the way nuxeo-repository-data
+         is implemented because it only does a single "must" predicate; it's
+         an AND for all terms. -->
+    <nuxeo-repository-data grouped-by="dc:lastContributor" data="{{topContributors}}">
     </nuxeo-repository-data>
 
     <paper-card heading="Top Contributors" elevation="2">
