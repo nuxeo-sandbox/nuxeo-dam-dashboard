@@ -1,6 +1,6 @@
 {
   "name": "nuxeo-dam-dashboard",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {},
   "devDependencies": {
     "connect-livereload": "^0.5.3",
