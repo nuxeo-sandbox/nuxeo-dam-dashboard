@@ -44,9 +44,7 @@ sweet-material-table /deep/ #tableFooter {
 }
 
 .center-chart {
-  height: 100%;
   margin: 25px auto 0 auto;
-  display: block;
 }
 
 iron-icon {
