@@ -52,6 +52,15 @@ Contributors:
     paper-toolbar {
       --paper-toolbar-background: #ffffff;
     }
+    
+    #datePicker {
+      display: inline-flex;
+    }
+    
+    .dateLabel {
+      padding-right: 3px;
+      padding-left: 5px;
+    }
   </style>
 
 </head>
@@ -67,8 +76,10 @@ Contributors:
       <paper-toolbar>
         <div id="logo"></div>
         <div id="header-title">DAM Dashboard</div>
-        <div id="header-dateRange">
+        <div id="datePicker">
+          <div class="dateLabel">Start</div>
           <input type="date" value="{{startDate::change}}">
+          <div class="dateLabel">End</div>
           <input type="date" value="{{endDate::change}}">
         </div>
       </paper-toolbar>
