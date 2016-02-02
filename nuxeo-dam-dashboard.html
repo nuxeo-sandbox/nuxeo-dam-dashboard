@@ -247,7 +247,7 @@ Example:
       var mimeTypeLookup = document.createElement('nuxeo-util-mimetypes');
       mimeTypeLookup.mimeType = mimeType;
       mimeTypeLookup.friendly = friendly;
-      return mimeTypeLookup._query();
+      return mimeTypeLookup.query();
     },
 
     // Instead of just returning the rows (using _rows), convert the MIME Types to something more friendly.
