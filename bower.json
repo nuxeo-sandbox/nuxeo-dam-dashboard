@@ -28,7 +28,6 @@
     "google-chart": "GoogleWebComponents/google-chart#~1.0.3",
     "nuxeo-elements": "nuxeo/nuxeo-elements#~0.2.1",
     "nuxeo-dataviz-elements": "nuxeo/nuxeo-dataviz-elements#~0.2.1",
-    "nuxeo-audit-data": "nuxeo-sandbox/nuxeo-audit-data#~1.0.1",
     "nuxeo-util-mimetypes": "nuxeo-sandbox/nuxeo-util-mimetypes#~1.0.3"
   },
   "devDependencies": {
